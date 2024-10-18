@@ -1,0 +1,61 @@
+using System;
+using System.Collections.Generic;
+
+class DiccionarioInglesEspanol
+{
+    
+    static Dictionary<string, string> CrearDiccionario()
+    {
+        Dictionary<string, string> diccionario = new Dictionary<string, string>();
+
+        Console.WriteLine("Introduce 5 palabras en inglés con su traducción al español:");
+
+        for (int i = 0; i < 5; i++)
+        {
+            Console.Write($"Palabra en inglés ({i + 1}/5): ");
+            string palabraIngles = Console.ReadLine().ToLower(); 
+
+            Console.Write($"Traducción en español: ");
+            string palabraEspanol = Console.ReadLine().ToLower();
+
+            
+            diccionario[palabraIngles] = palabraEspanol;
+        }
+
+        return diccionario;
+    }
+
+    
+    static void Traducir(Dictionary<string, string> diccionario)
+    {
+        Console.WriteLine("\nModo de traducción activado. Escribe una palabra en inglés para obtener su traducción o 'salir' para terminar.");
+
+        string palabra;
+        do
+        {
+            Console.Write("\nIntroduce una palabra en inglés (o 'salir' para finalizar): ");
+            palabra = Console.ReadLine().ToLower();
+
+            if (palabra != "salir")
+            {
+                if (diccionario.ContainsKey(palabra))
+                {
+                    Console.WriteLine($"La traducción de '{palabra}' es: {diccionario[palabra]}");
+                }
+                else
+                {
+                    Console.WriteLine($"La palabra '{palabra}' no se encuentra en el diccionario.");
+                }
+            }
+
+        } while (palabra != "salir");
+
+        Console.WriteLine("Has salido del modo de traducción.");
+    }
+
+    static void Main()
+    {
+        Dictionary<string, string> diccionario = CrearDiccionario();
+        Traducir(diccionario);
+    }
+}
