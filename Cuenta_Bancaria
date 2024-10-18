@@ -1,0 +1,98 @@
+using System;
+
+class CuentaBancaria
+{
+    private decimal saldo;
+
+    public CuentaBancaria(decimal saldoInicial)
+    {
+        saldo = saldoInicial;
+    }
+
+    public decimal ConsultarSaldo()
+    {
+        return saldo;
+    }
+
+    public void DepositarDinero(decimal cantidad)
+    {
+        if (cantidad > 0)
+        {
+            saldo += cantidad;
+            Console.WriteLine($"Has depositado {cantidad:C2}. Tu nuevo saldo es: {saldo:C2}");
+        }
+        else
+        {
+            Console.WriteLine("La cantidad a depositar debe ser mayor que cero.");
+        }
+    }
+
+    public void RetirarDinero(decimal cantidad)
+    {
+        if (cantidad > 0)
+        {
+            if (cantidad <= saldo)
+            {
+                saldo -= cantidad;
+                Console.WriteLine($"Has retirado {cantidad:C2}. Tu nuevo saldo es: {saldo:C2}");
+            }
+            else
+            {
+                Console.WriteLine("No tienes suficiente saldo para realizar esta operación.");
+            }
+        }
+        else
+        {
+            Console.WriteLine("La cantidad a retirar debe ser mayor que cero.");
+        }
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        CuentaBancaria cuenta = new CuentaBancaria(1000);  // Saldo inicial de 1000
+        int opcion;
+
+        do
+        {
+            MostrarMenu();
+            opcion = int.Parse(Console.ReadLine());
+
+            switch (opcion)
+            {
+                case 1:
+                    Console.WriteLine($"Tu saldo actual es: {cuenta.ConsultarSaldo():C2}");
+                    break;
+                case 2:
+                    Console.Write("Ingresa la cantidad a depositar: ");
+                    decimal deposito = decimal.Parse(Console.ReadLine());
+                    cuenta.DepositarDinero(deposito);
+                    break;
+                case 3:
+                    Console.Write("Ingresa la cantidad a retirar: ");
+                    decimal retiro = decimal.Parse(Console.ReadLine());
+                    cuenta.RetirarDinero(retiro);
+                    break;
+                case 4:
+                    Console.WriteLine("Saliendo del programa...");
+                    break;
+                default:
+                    Console.WriteLine("Opción no válida. Intente nuevamente.");
+                    break;
+            }
+
+        } while (opcion != 4);
+    }
+
+    static void MostrarMenu()
+    {
+        Console.WriteLine("\n--- Menú de Cuenta Bancaria ---");
+        Console.WriteLine("1. Consultar saldo");
+        Console.WriteLine("2. Depositar dinero");
+        Console.WriteLine("3. Retirar dinero");
+        Console.WriteLine("4. Salir");
+        Console.Write("Seleccione una opción: ");
+    }
+}
